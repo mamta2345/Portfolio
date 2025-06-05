@@ -7,13 +7,9 @@ class ResumePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Ensure AppBar has no extra height
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: AppbarReusable(
-            screenWidth: MediaQuery.of(context).size.width, title: "Resume"),
-      ),
-      body: SafeArea(
+      appBar: AppbarReusable(screenWidth: 600, title: "Resume"),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -92,51 +88,54 @@ class TimelineTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 4),
-              width: 10,
-              height: 10,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey.shade400,
-              ),
-            ),
-            Container(
-              width: 2,
-              height: bulletPoints != null ? bulletPoints!.length * 20.0 : 40,
-              color: Colors.grey.shade300,
-            ),
-          ],
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
             children: [
-              Text(title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16)),
-              const SizedBox(height: 4),
-              Text(subtitle,
-                  style: const TextStyle(color: Colors.orange, fontSize: 14)),
-              if (description != null) ...[
-                const SizedBox(height: 4),
-                Text(description!,
-                    style: const TextStyle(color: Colors.grey, fontSize: 14)),
-              ],
-              if (bulletPoints != null) ...[
-                const SizedBox(height: 8),
-                ...bulletPoints!.map((point) => BulletPoint(text: point)),
-              ],
+              Container(
+                margin: const EdgeInsets.only(top: 4),
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade400,
+                ),
+              ),
+              Container(
+                width: 2,
+                height: bulletPoints != null ? bulletPoints!.length * 20.0 : 40,
+                color: Colors.grey.shade300,
+              ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16)),
+                const SizedBox(height: 4),
+                Text(subtitle,
+                    style: const TextStyle(color: Colors.orange, fontSize: 14)),
+                if (description != null) ...[
+                  const SizedBox(height: 4),
+                  Text(description!,
+                      style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                ],
+                if (bulletPoints != null) ...[
+                  const SizedBox(height: 8),
+                  ...bulletPoints!.map((point) => BulletPoint(text: point)),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
