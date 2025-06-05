@@ -1,18 +1,27 @@
-// ignore_for_file: use_key_in_widget_constructors
-
 import 'package:Portifolio/Screens/Home/correct_home.dart';
-import 'package:Portifolio/Reusable_widget/side_bar_laptop.dart';
 import 'package:Portifolio/splacescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Dummy ThemeController to simulate your GetX theme logic
+class ThemeController extends GetxController {
+  RxBool isDark = false.obs;
+
+  void toggleTheme() {
+    isDark.value = !isDark.value;
+  }
+}
+
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED FIX
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  // Initialize your GetX theme controller
   final ThemeController themeController = Get.put(ThemeController());
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
           ),
@@ -39,7 +48,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: Colors.black,
           primaryColor: Colors.black,
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
           ),
@@ -50,13 +59,13 @@ class MyApp extends StatelessWidget {
         ),
         home: Builder(
           builder: (context) {
-            // Use MediaQuery here
             final screenWidth = MediaQuery.of(context).size.width;
+            print('Screen width: $screenWidth');
 
             if (screenWidth < 600) {
-              return const SplaceScreen(); // Show on small screens
+              return const SplaceScreen(); // Use your SplaceScreen for small devices
             } else {
-              return NewHome(); // Show on large screens
+              return NewHome();
             }
           },
         ),
