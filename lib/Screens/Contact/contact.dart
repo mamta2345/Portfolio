@@ -18,7 +18,7 @@ class Contact extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height > 600 ? 100 : null,
+                height: MediaQuery.of(context).size.height > 600 ? 40 : null,
               ),
               Center(
                 child: Container(
