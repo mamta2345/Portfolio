@@ -1,32 +1,13 @@
-import 'package:Portifolio/Screens/Link_url_lancher/url.dart';
+import 'package:Portifolio/Contoller%20Pages/about_contoller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:Portifolio/Screens/Link_url_lancher/url.dart';
 
-class Aboutpage extends StatefulWidget {
-  const Aboutpage({super.key});
-
-  @override
-  State<Aboutpage> createState() => _AboutpageState();
-}
-
-class _AboutpageState extends State<Aboutpage> {
-  String getGreeting() {
-    final int hour = DateTime.now().hour;
-
-    if (hour >= 5 && hour < 12) {
-      return 'Good Morning';
-    } else if (hour >= 12 && hour < 17) {
-      return 'Good Afternoon';
-    } else if (hour >= 17 && hour < 21) {
-      return 'Good Evening';
-    } else {
-      return 'Good Night';
-    }
-  }
+class Aboutpage extends StatelessWidget {
+  final AboutController controller = Get.put(AboutController());
 
   @override
   Widget build(BuildContext context) {
-    String greeting = getGreeting();
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -55,7 +36,7 @@ class _AboutpageState extends State<Aboutpage> {
                 const Row(
                   children: [
                     Text(
-                      "Aboutpage Me",
+                      "About Me",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -68,20 +49,22 @@ class _AboutpageState extends State<Aboutpage> {
                 const SizedBox(height: 8),
                 Container(width: 40, height: 4, color: Colors.orange),
                 const SizedBox(height: 16),
-                Text(
-                  "$greeting!",
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.orange,
-                  ),
-                ),
+                Obx(() => Text(
+                      "${controller.greeting.value}!",
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                      ),
+                    )),
                 const SizedBox(height: 16),
                 text(
-                    "Hello! My name is Mamta Kumari. I am a Flutter Developer. I like to make mobile apps that are easy to use and look good."),
+                    "Hello! My name is Mamta Kumari. I am a Flutter Developer. "
+                    "I like to make mobile apps that are easy to use and look good."),
                 const SizedBox(height: 12),
                 text(
-                    "I have built apps using Flutter and Dart. I can connect apps to the internet using APIs and make the design work on all screen sizes."),
+                    "I have built apps using Flutter and Dart. I can connect apps "
+                    "to the internet using APIs and make the design work on all screen sizes."),
                 const SizedBox(height: 12),
                 text(
                     "I enjoy learning new things and want to become better at app development."),

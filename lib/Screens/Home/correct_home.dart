@@ -82,7 +82,7 @@ class _NewHomeState extends State<NewHome> with TickerProviderStateMixin {
             child: PageView(
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
-              children: const [
+              children: [
                 Aboutpage(),
                 Skill(),
                 Contact(),

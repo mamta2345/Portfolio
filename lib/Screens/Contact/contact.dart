@@ -1,74 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:Portifolio/Screens/AppBar/appbar.dart';
-import 'package:flutter/foundation.dart';
+import 'package:Portifolio/Contoller%20Pages/contact_contoller.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:Portifolio/Screens/AppBar/appbar.dart';
 
-class Contact extends StatefulWidget {
-  const Contact({super.key});
-
-  @override
-  State<Contact> createState() => _ContactState();
-}
-
-class _ContactState extends State<Contact> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController subjectController = TextEditingController();
-  final TextEditingController messageController = TextEditingController();
-
-  Future<void> sendEmail() async {
-    const serviceId = 'service_w5fj7us';
-    const templateId = 'template_9t6e76a';
-    const userId = 'F2y_ofMWVJFtNzO2h';
-
-    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
-
-    try {
-      final response = await http.post(
-        url,
-        headers: {
-          'origin': 'http://localhost',
-          'Content-Type': 'application/json',
-        },
-        body: json.encode({
-          'service_id': serviceId,
-          'template_id': templateId,
-          'user_id': userId,
-          'template_params': {
-            'user_name': nameController.text,
-            'user_email': emailController.text,
-            "to_email": "your_email@example.com",
-            'user_subject': subjectController.text,
-            'user_message': messageController.text,
-          }
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Message Sent Successfully!')),
-        );
-        nameController.clear();
-        emailController.clear();
-        subjectController.clear();
-        messageController.clear();
-      } else {
-        if (kDebugMode) {
-          print('Failed to send email: ${response.body}');
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to send message')),
-        );
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error: $e');
-      }
-    }
-  }
+class Contact extends StatelessWidget {
+  Contact({super.key});
+  final ContactController controller = Get.put(ContactController());
 
   @override
   Widget build(BuildContext context) {
@@ -118,52 +55,61 @@ class _ContactState extends State<Contact> {
                         if (constraints.maxWidth < 500) {
                           return Column(
                             children: [
-                              inputField("Your Name", nameController),
+                              inputField(
+                                  "Your Name", controller.nameController),
                               const SizedBox(height: 10),
-                              inputField("Email ID", emailController),
+                              inputField(
+                                  "Email ID", controller.emailController),
                             ],
                           );
                         } else {
                           return Row(
                             children: [
                               Expanded(
-                                  child:
-                                      inputField("Your Name", nameController)),
+                                  child: inputField(
+                                      "Your Name", controller.nameController)),
                               const SizedBox(width: 10),
                               Expanded(
-                                  child:
-                                      inputField("Email ID", emailController)),
+                                  child: inputField(
+                                      "Email ID", controller.emailController)),
                             ],
                           );
                         }
                       }),
                       const SizedBox(height: 10),
-                      inputField("Subject", subjectController),
+                      inputField("Subject", controller.subjectController),
                       const SizedBox(height: 10),
-                      inputField("Your Message", messageController,
+                      inputField("Your Message", controller.messageController,
                           maxLines: 5),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber,
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                      Obx(() => SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.amber,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: controller.isLoading.value
+                                  ? null
+                                  : controller.sendEmail,
+                              child: controller.isLoading.value
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : const Text(
+                                      "Send Message",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                             ),
-                          ),
-                          onPressed: sendEmail,
-                          child: const Text(
-                            "Send Message",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                          )),
                       const SizedBox(height: 20),
                       const Divider(color: Colors.grey),
                     ],
@@ -174,16 +120,6 @@ class _ContactState extends State<Contact> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget reuseImage(String path, double height, double width) {
-    return Image.asset(
-      path,
-      width: width,
-      height: height,
-      errorBuilder: (context, error, stackTrace) =>
-          const Icon(Icons.image_not_supported, size: 40),
     );
   }
 
