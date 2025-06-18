@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 
 class AppbarReusable extends StatelessWidget implements PreferredSizeWidget {
   final double screenWidth;
+  final String title;
 
-  const AppbarReusable(
-      {super.key, required this.screenWidth, required String title});
+  const AppbarReusable({
+    super.key,
+    required this.screenWidth,
+    required this.title,
+  });
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,8 @@ class AppbarReusable extends StatelessWidget implements PreferredSizeWidget {
         children: [
           reuseImage("assets/images/logo.png", 80, 80),
           const Spacer(),
+          Text(title,
+              style: const TextStyle(fontSize: 18)), // use the title here
         ],
       ),
       flexibleSpace: Container(

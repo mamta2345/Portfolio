@@ -2,6 +2,7 @@ import 'package:Portifolio/Contoller%20Pages/contact_contoller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:Portifolio/Screens/AppBar/appbar.dart';
+// Make sure AppBarReusable is exported from appbar.dart
 
 class Contact extends StatelessWidget {
   Contact({super.key});
@@ -10,7 +11,9 @@ class Contact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarReusable(screenWidth: 600, title: "Contacts"),
+      appBar: MediaQuery.of(context).size.width < 600
+          ? const AppbarReusable(screenWidth: 600, title: "Contacts")
+          : null,
       backgroundColor: Colors.grey.shade300,
       body: SafeArea(
         child: SingleChildScrollView(
