@@ -75,7 +75,9 @@ class _NewHomeState extends State<NewHome> with TickerProviderStateMixin {
                 ),
               ),
             )
-          : AppbarReusable(screenWidth: 600, title: "Portfolio"),
+          : AppbarReusable(
+              screenWidth: 600,
+            ),
       body: Column(
         children: [
           Expanded(

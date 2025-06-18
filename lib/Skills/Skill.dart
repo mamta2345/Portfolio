@@ -14,7 +14,9 @@ class _SkillState extends State<Skill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarReusable(screenWidth: 600, title: "Skills"),
+      appBar: AppbarReusable(
+        screenWidth: 600,
+      ),
       body: Container(
         color: const Color.fromARGB(255, 211, 211, 211),
         child: Padding(

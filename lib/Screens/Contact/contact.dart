@@ -12,7 +12,9 @@ class Contact extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MediaQuery.of(context).size.width < 600
-          ? const AppbarReusable(screenWidth: 600, title: "Contacts")
+          ? const AppbarReusable(
+              screenWidth: 600,
+            )
           : null,
       backgroundColor: Colors.grey.shade300,
       body: SafeArea(
