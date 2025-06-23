@@ -23,7 +23,7 @@ class _SkillState extends State<Skill> {
           padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: [ 
               texts("My Tech Stack", 35, FontWeight.bold),
               texts(" Technologies I’ve been working with recently", 16,
                   FontWeight.normal),
